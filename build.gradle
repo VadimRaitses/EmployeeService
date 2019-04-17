@@ -1,0 +1,43 @@
+plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'java'
+    id 'application'
+}
+
+apply plugin: 'io.spring.dependency-management'
+
+group = ''
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+ 
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
+application {
+    mainClassName = 'com.employeeservice.EmployeeServiceApplication'
+    applicationDefaultJvmArgs = ['-Dspring.profiles.active=dev']
+
+}
+
+repositories {
+    mavenCentral()
+}
+//    docker run -d --hostname my-rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3.7
+//    docker run -d --name mongo -p 27017:27017  mongo:latest
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
+
+}
