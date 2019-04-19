@@ -33,7 +33,6 @@ public class AccountServiceImpl implements AccountService {
         return repository.findByEmail(mail);
     }
 
-    @Override
     public UserDetails loadAccountByEmail(String email) {
         return getUserDetails(email);
 

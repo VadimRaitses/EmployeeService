@@ -24,12 +24,14 @@ import java.util.ArrayList;
  * @author Raitses Vadim
  */
 
+
 public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
     private AuthenticationManager authenticationManager;
     private AccountService userDetailsService;
+
 
     JWTAuthenticationFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager, AccountService userDetailsService) {
         super(defaultFilterProcessesUrl);
