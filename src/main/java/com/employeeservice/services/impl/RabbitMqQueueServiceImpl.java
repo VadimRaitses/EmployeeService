@@ -1,6 +1,5 @@
 package com.employeeservice.services.impl;
 
-import com.employeeservice.exceptions.GlobalExceptionHandler;
 import com.employeeservice.services.QueueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,6 @@ public class RabbitMqQueueServiceImpl implements QueueService<String> {
     private final String exchangeTopic;
     private Logger logger = LoggerFactory.getLogger(RabbitMqQueueServiceImpl.class);
 
-
     @Autowired
     public RabbitMqQueueServiceImpl(@NotNull RabbitTemplate rabbitTemplate,
                                     @NotNull @Qualifier("exchangeTopic") String exchangeTopic) {
@@ -36,7 +34,7 @@ public class RabbitMqQueueServiceImpl implements QueueService<String> {
     @Override
     public void sendMessage(String eventName, String message) {
         try {
-            rabbitTemplate.convertAndSend(exchangeTopic, "employee", message);
+            rabbitTemplate.convertAndSend(exchangeTopic, message);
         } catch (AmqpException e) {
             logger.error(e.getLocalizedMessage());
         }

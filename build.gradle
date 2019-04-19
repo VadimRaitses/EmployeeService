@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'org.springframework.boot' version '2.1.3.RELEASE'
     id 'java'
     id 'application'
 }
@@ -7,28 +7,26 @@ plugins {
 apply plugin: 'io.spring.dependency-management'
 
 group = ''
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
- 
+
+repositories {
+    mavenCentral()
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
 
-
 application {
     mainClassName = 'com.employeeservice.EmployeeServiceApplication'
     applicationDefaultJvmArgs = ['-Dspring.profiles.active=dev']
-
 }
 
-repositories {
-    mavenCentral()
-}
-//    docker run -d --hostname my-rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3.7
-//    docker run -d --name mongo -p 27017:27017  mongo:latest
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
@@ -38,6 +36,140 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-amqp'
     compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.5'
+}
 
 
+task startDocker <<{
+    println "starting Docker"
+    removeRunningDocker()
+    createMicroServiceNetwork()
+    createMongoContainer()
+    createRabbitMqContainer()
+    createEmployeeServiceContainer()
+    initAndRun()
+    createEventServiceContainer()
+}
+
+static  createEmployeeServiceContainer(version) {
+    File dockerFile = new File("./Dockerfile")
+    if (dockerFile.exists())
+        dockerFile.delete()
+    dockerFile.createNewFile()
+    dockerFile.withWriter('UTF-8') { writer ->
+        writer.writeLine("FROM openjdk:8-jre")
+        writer.writeLine("ADD build/libs/employee-services-${version}.jar /employee-service.jar")
+        writer.writeLine('CMD ["java", "-jar", "employee-service.jar"]')
+    }
+
+}
+
+
+task buildLocalContainers <<{
+    //    docker build  -f MongoDockerfile .
+    println "init and run"
+    def commands = ["docker run -d --hostname my-rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3.7",
+                    "docker run -d --name mongo -p 27017:27017  mongo:latest"]
+    executeShell(commands)
+}
+
+
+task getEmployeeService << {
+   // removeRunningDocker()
+   // createMicroServiceNetwork()
+   // createMongoContainer()
+   // createRabbitMqContainer()
+    createEmployeeServiceContainer(version)
+    initAndRun()
+}
+
+task getEventService << {
+    //removeRunningDocker()
+    //createMicroServiceNetwork()
+    //createMongoContainer()
+    //createRabbitMqContainer()
+    println "${version}"
+    createEventServiceContainer()
+}
+
+
+
+task buildDockers<<{
+    removeRunningDocker()
+    createMongoContainer()
+    createRabbitMqContainer()
+}
+
+static void createEventServiceContainer(){
+    def commands = [
+            "ls",
+            "sh ./event.sh",
+            "ls",
+    ]
+    executeShell(commands)
+}
+
+
+static void initAndRun() {
+    println "init and run"
+    def commands = ["docker build -t entityservice:latest .",
+                    "docker run -d --name entityservice -p 8080:8080 --net=hubnetwork entityservice:latest"]
+    executeShell(commands)
+}
+
+static void executeShell(commands) {
+    println(":executeShell:")
+    commands.each {
+        println ":current shell: " + it
+        println it.execute().text
+    }
+}
+
+task removedockers << {
+    removeRunningDocker()
+}
+
+static void removeRunningDocker() {
+    println ":removeRunningDocker:"
+    def commands = ["docker stop mongo",
+                    "docker rm mongo",
+                    "docker stop rabbitmq",
+                    "docker rm -f rabbitmq",
+                    "docker stop entityservice",
+                    "docker rm -f entityservice",
+                    "docker stop eventservice",
+                    "docker rm -f eventservice"]
+    executeShell(commands)
+}
+
+static void createMicroServiceNetwork() {
+    println ":createDockerNetwork:"
+    def commands = ["docker network rm hubnetwork", "docker network create hubnetwork"]
+    executeShell(commands)
+}
+
+
+static void createMongoContainer() {
+    println ":mongo init docker with initial script:"
+    File dockerFile = new File("./MongoDockerfile")
+    if (dockerFile.exists())
+        dockerFile.delete()
+    dockerFile.createNewFile()
+    dockerFile.withWriter('UTF-8') { writer ->
+        writer.writeLine("FROM  mongo:latest")
+        writer.writeLine('CMD ["mongod", "--port", "27777"]')
+    }
+    def commands = ["docker build -t mongohub:latest -f MongoDockerfile .",
+                    "docker run -d --name mongo -p 27017:27777 --net=hubnetwork  mongohub:latest"]
+    executeShell(commands)
+}
+
+
+static void createRabbitMqContainer() {
+    println ":rabbitMQ init docker with initial script:"
+    def commands = ["docker run -d --hostname my-rabbit --name rabbitmq -p 5672:5672 -p 15672:15672 --net=hubnetwork rabbitmq:3.7"]
+    executeShell(commands)
 }

@@ -10,6 +10,9 @@ import com.employeeservice.models.EmployeeState;
 import com.employeeservice.services.EmployeeService;
 import com.employeeservice.services.QueueService;
 import com.google.gson.JsonObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.Optional;
@@ -20,13 +23,15 @@ import java.util.UUID;
  * @author Raitses Vadim
  */
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 
 
     private final DaoRepository daoRepository;
     private final QueueService<String> queueService;
 
-    public EmployeeServiceImpl(@NotNull DaoRepository repository,
+    @Autowired
+    public EmployeeServiceImpl(@NotNull @Qualifier("mongoRepository") DaoRepository repository,
                                @NotNull QueueService<String> queueService) {
         this.daoRepository = repository;
         this.queueService = queueService;
