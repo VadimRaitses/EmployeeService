@@ -19,7 +19,7 @@ import static com.employeeservice.auth.SecurityConstants.TOKEN_PREFIX;
  * @author Raitses Vadim
  */
 
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 

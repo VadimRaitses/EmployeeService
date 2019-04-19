@@ -9,7 +9,7 @@ public enum EmployeeState {
     DELETED("deleted"),
     UPDATED("updated");
 
-    private String state;
+    private final String state;
 
     EmployeeState(String state) {
         this.state = state;

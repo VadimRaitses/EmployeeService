@@ -6,20 +6,20 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
-
 import java.util.Date;
+import java.util.Objects;
 
 
 /**
- * @author Raitses Vadim
+ *  @author  Raitses Vadim
  */
 
 @Document(collection = "employee")
-public class Employee implements Updatable {
+public class Employee implements Updatable{
 
     @Id
     private String id;
-    @Indexed(name = "email", unique = true)
+    @Indexed(name="email",unique = true)
     private String email;
     private String fullName;
     private Date birthday;
@@ -106,11 +106,19 @@ public class Employee implements Updatable {
 
         Employee employee = (Employee) o;
 
-        if (id != null ? !id.equals(employee.id) : employee.id != null) return false;
-        if (email != null ? !email.equals(employee.email) : employee.email != null) return false;
-        if (fullName != null ? !fullName.equals(employee.fullName) : employee.fullName != null) return false;
-        if (birthday != null ? !birthday.equals(employee.birthday) : employee.birthday != null) return false;
-        return department != null ? department.equals(employee.department) : employee.department == null;
+        if (!Objects.equals(id, employee.id)) {
+            return false;
+        }
+        if (!Objects.equals(email, employee.email)) {
+            return false;
+        }
+        if (!Objects.equals(fullName, employee.fullName)) {
+            return false;
+        }
+        if (!Objects.equals(birthday, employee.birthday)) {
+            return false;
+        }
+        return Objects.equals(department, employee.department);
     }
 
     @Override

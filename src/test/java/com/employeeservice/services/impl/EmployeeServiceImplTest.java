@@ -20,11 +20,11 @@ public class EmployeeServiceImplTest {
     private static EmployeeServiceImplMock classUnderTest;
     private final static String employeeMockedId = "id";
     private final DaoRepository repository = Mockito.mock(DaoRepository.class);
-    private final static QueueService queueService = Mockito.mock(QueueService.class);
+    private final static RabbitMqQueueServiceImpl queueService = Mockito.mock(RabbitMqQueueServiceImpl.class);
 
     @Before
     public void setUp() {
-        classUnderTest = new EmployeeServiceImplMock(repository, queueService);
+        classUnderTest = new EmployeeServiceImplMock(repository);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class EmployeeServiceImplTest {
     }
 
     @Test
-    public void deleteEmployeeSucess() throws Exception {
+    public void deleteEmployeeSuccess() throws Exception {
         when(repository.delete("id", Employee.class)).thenReturn(true);
         boolean actual = classUnderTest.deleteEmployee("id");
         Assert.assertTrue(actual);
@@ -124,8 +124,7 @@ public class EmployeeServiceImplTest {
 
     class EmployeeServiceImplMock extends EmployeeServiceImpl {
 
-        EmployeeServiceImplMock(DaoRepository repository,
-                                QueueService<String> queueService) {
+        EmployeeServiceImplMock(DaoRepository repository) {
             super(repository, queueService);
         }
 

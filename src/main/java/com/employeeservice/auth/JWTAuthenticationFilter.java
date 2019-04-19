@@ -23,12 +23,12 @@ import java.util.ArrayList;
  */
 
 
-public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
-    private AuthenticationManager authenticationManager;
-    private AccountService userDetailsService;
+    private final AuthenticationManager authenticationManager;
+    private final AccountService userDetailsService;
 
 
     JWTAuthenticationFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager, AccountService userDetailsService) {

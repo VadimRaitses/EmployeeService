@@ -25,8 +25,8 @@ import static com.employeeservice.auth.SecurityConstants.SIGN_UP_URL;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AccountService userDetailsService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final AccountService userDetailsService;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Autowired

@@ -14,7 +14,7 @@ import java.util.Date;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
 
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globleExcpetionHandler(Exception ex, WebRequest request) {
+    public ResponseEntity<?> globeExceptionHandler(Exception ex, WebRequest request) {
         ErrorDetails errorDetails = getErrorDetails(request, ex.getLocalizedMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
     }

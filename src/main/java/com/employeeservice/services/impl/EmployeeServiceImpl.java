@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         JsonObject objectData = new JsonObject();
         objectData.addProperty("entityId", employeeId);
         objectData.addProperty("state", state.getState());
-        queueService.sendMessage("create", objectData.toString());
+        queueService.sendMessage("employee", objectData.toString());
     }
 
     @Override

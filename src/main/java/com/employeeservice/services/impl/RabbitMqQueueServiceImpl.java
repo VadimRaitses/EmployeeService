@@ -18,10 +18,11 @@ import javax.validation.constraints.NotNull;
 @Service
 public class RabbitMqQueueServiceImpl implements QueueService<String> {
 
+    private final Logger logger = LoggerFactory.getLogger(RabbitMqQueueServiceImpl.class);
+
 
     private final RabbitTemplate rabbitTemplate;
     private final String exchangeTopic;
-    private Logger logger = LoggerFactory.getLogger(RabbitMqQueueServiceImpl.class);
 
     @Autowired
     public RabbitMqQueueServiceImpl(@NotNull RabbitTemplate rabbitTemplate,

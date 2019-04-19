@@ -4,6 +4,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Objects;
+
 
 /**
  * @author Raitses Vadim
@@ -49,12 +51,16 @@ public class Department {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Department that = (Department) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        return name != null ? name.equals(that.name) : that.name == null;
+        if (!Objects.equals(id, that.id)) {
+            return false;
+        }
+        return Objects.equals(name, that.name);
     }
 
     @Override

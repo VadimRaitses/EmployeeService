@@ -19,11 +19,11 @@ public class JWTAuthorizationFilterTest {
 
 
     private JWTAuthorizationFilterMock classUnderTest;
-    private AuthenticationManager authManager = mock(AuthenticationManager.class);
+    private final  AuthenticationManager authManager = mock(AuthenticationManager.class);
 
-    private HttpServletRequest req = mock(HttpServletRequest.class);
-    private HttpServletResponse res = mock(HttpServletResponse.class);
-    private FilterChain chain = mock(FilterChain.class);
+    private final HttpServletRequest req = mock(HttpServletRequest.class);
+    private final HttpServletResponse res = mock(HttpServletResponse.class);
+    private final FilterChain chain = mock(FilterChain.class);
     private Account acc;
 
 
@@ -51,7 +51,7 @@ public class JWTAuthorizationFilterTest {
 
 
     @Test
-    public void authorizeNotSucceded() throws Exception {
+    public void authorizeNotSucceeded() throws Exception {
         when(req.getHeader(HEADER_STRING)).thenReturn("not token");
         doThrow(RuntimeException.class).when(chain).doFilter(isA(HttpServletRequest.class), isA(HttpServletResponse.class));
         boolean actual = classUnderTest.authorize(req, res, chain);

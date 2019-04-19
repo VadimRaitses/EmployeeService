@@ -40,7 +40,7 @@ public class EmployeeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @Mock
     EmployeeService employeeService;

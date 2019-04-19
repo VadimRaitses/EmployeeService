@@ -33,18 +33,15 @@ public class JWTAuthenticationFilterTest {
     private final HttpServletRequest req = mock(HttpServletRequest.class);
     private final HttpServletResponse res = mock(HttpServletResponse.class);
     private final FilterChain chain = mock(FilterChain.class);
-    private final String url = "/token/";
-    private Account acc;
     private ServletInputStream servletInputStream;
     private ByteArrayInputStream byteArrayInputStream;
-    private UsernamePasswordAuthenticationToken uToken;
     private final AutType expectedType = new AutType();
 
     @Before
     public void setup() {
 
 
-        acc = new Account("va", "va");
+        String url = "/token/";
         classUnderTest = new JWTAuthenticationFilter(url, authManager, userDetailsService);
 
         String myString = "{\"email\":\"va\",\"password\": \"va\"}";
@@ -71,7 +68,7 @@ public class JWTAuthenticationFilterTest {
             }
         };
 
-        uToken = new UsernamePasswordAuthenticationToken(
+        UsernamePasswordAuthenticationToken uToken = new UsernamePasswordAuthenticationToken(
                 "va",
                 "ac",
                 new ArrayList<>());
@@ -79,7 +76,7 @@ public class JWTAuthenticationFilterTest {
     }
 
     @Test
-    public void attemptAuthentication() throws Exception {
+    public void attemptAuthenticationSuccess() throws Exception {
 
         when(req.getInputStream()).thenReturn(servletInputStream);
         when(authManager.authenticate(isA(UsernamePasswordAuthenticationToken.class)))
@@ -88,9 +85,7 @@ public class JWTAuthenticationFilterTest {
         Assert.assertEquals(expectedType, actual);
     }
 
-    @Test
-    public void successfulAuthentication() {
-    }
+
 
     class AutType implements Authentication {
 
