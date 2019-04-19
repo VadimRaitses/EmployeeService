@@ -70,6 +70,8 @@ curl -X POST \
   -H 'cache-control: no-cache' \
   -d '{"name":"department"}'
 
+in successful case will respond created entity with id. and status 200
+
   
 **create employee :**
 
@@ -90,6 +92,11 @@ curl -X POST \
 	}
 }'
 
+in successful case will respond created entity with id. and status 200
+400 in case of provided bad department id 400
+404 in case of department not found 
+400 in case of  exisiting employee with same email,
+
 
 **update employee :**
 
@@ -107,6 +114,9 @@ curl -X PUT \
 	}
 }'
 
+in successful case will respond with status 204  
+
+
 
 **get Employee** 
 
@@ -120,6 +130,7 @@ curl -X DELETE \
   http://localhost:8080/employee/{id} \
   -H 'cache-control: no-cache'
   
+in successful case will respond with status 204  
 
 **get Events** 
 
@@ -127,3 +138,4 @@ curl -X GET \
   http://localhost:8081/event/{employeeid} \
   -H 'cache-control: no-cache'
 
+array of 
