@@ -1,6 +1,7 @@
 package com.employeeservice.models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +14,10 @@ import java.util.Objects;
 
 @Document(collection = "department")
 public class Department {
+
+
+    @Transient
+    public static final String SEQUENCE_NAME = "department_sequence";
 
     @Id
     private String id;
@@ -69,4 +74,7 @@ public class Department {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
+
+
+
 }

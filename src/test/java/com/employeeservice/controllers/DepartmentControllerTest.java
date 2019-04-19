@@ -5,6 +5,7 @@ import com.employeeservice.models.Department;
 import com.employeeservice.services.DepartmentService;
 import com.google.gson.Gson;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,6 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("classpath:application-dev.properties")
+@Ignore
 public class DepartmentControllerTest {
 
     @Autowired

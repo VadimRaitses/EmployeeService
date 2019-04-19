@@ -43,7 +43,6 @@ public class EmployeeController {
     )
     @ApiImplicitParams(
             @ApiImplicitParam(name = "Authorization", value = "Access Token", required = true, allowEmptyValue = false, paramType = "header", dataTypeClass = String.class, example = "Bearer access_token")
-
     )
     @RequestMapping(path = "", method = RequestMethod.POST)
     public ResponseEntity<?> createEmployee(@RequestBody Employee employee) throws EntityNotFoundException, BadEntityException, EntityAlreadyExistsException {

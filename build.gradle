@@ -53,7 +53,7 @@ task startDocker <<{
     createMicroServiceNetwork()
     createMongoContainer()
     createRabbitMqContainer()
-    createEmployeeServiceContainer()
+    createEmployeeServiceContainer(version)
     initAndRun()
     createEventServiceContainer()
 }

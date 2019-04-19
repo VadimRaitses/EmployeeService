@@ -69,10 +69,10 @@ public class AppConfig {
     }
 
 
-    @Bean
-    public DepartmentServiceImpl departmentService() {
-        return new DepartmentServiceImpl(mongoRepositoryDao());
-    }
+//    @Bean
+//    public DepartmentServiceImpl departmentService() {
+//        return new DepartmentServiceImpl(mongoRepositoryDao());
+//    }
 
 
     @Bean
