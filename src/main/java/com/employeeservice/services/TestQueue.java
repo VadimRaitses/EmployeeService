@@ -16,25 +16,17 @@ public class TestQueue {
 
         ConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
         AmqpAdmin admin = new RabbitAdmin(connectionFactory);
-        admin.declareQueue(new Queue("myqueue"));
+        admin.declareQueue(new Queue("check"));
 
 
         AmqpTemplate template = new RabbitTemplate(connectionFactory);
 
         for (int i = 0; i < 100; i++) {
-            template.convertAndSend("myqueue", Integer.toString(i));
+            template.convertAndSend("check", Integer.toString(i));
         }
         for (int j = 0; j < 50; j++) {
-
-            Object foo = template.receiveAndConvert("myqueue");
-            System.out.println(foo);
-
-        }
-        Thread.sleep(1000);
-        System.out.println("sleep");
-        while(true){
-
-            Object foo = template.receiveAndConvert("myqueue");
+            Thread.sleep(1000);
+            Object foo = template.receiveAndConvert("check");
             System.out.println(foo);
 
         }

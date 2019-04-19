@@ -1,5 +1,5 @@
 # EmployeeService
-Spring Based API with employee entities for micro services architecture with rabbitmq
+Spring Based API with employee entities for micro services architecture with rabbitmq, mongo, Auth/Authorization layer
 and event-service which subscribe for message broker.
 
 

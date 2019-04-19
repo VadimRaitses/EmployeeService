@@ -8,14 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 import static com.employeeservice.auth.SecurityConstants.HEADER_STRING;
 import static com.employeeservice.auth.SecurityConstants.TOKEN_PREFIX;
-
 
 
 /**
@@ -24,16 +21,16 @@ import static com.employeeservice.auth.SecurityConstants.TOKEN_PREFIX;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JWTAuthorizationFilter.class);
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager) {
+    JWTAuthorizationFilter(AuthenticationManager authManager) {
         super(authManager);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
-                                    FilterChain chain)  {
+                                    FilterChain chain) {
         authorize(req, res, chain);
     }
 
@@ -49,7 +46,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             chain.doFilter(req, res);
             return true;
         } catch (Exception e) {
-            LOGGER.error(":doFilterInternal:error during authorization" + e.getMessage());
+            logger.error(":doFilterInternal:error during authorization" + e.getMessage());
             return false;
         }
     }

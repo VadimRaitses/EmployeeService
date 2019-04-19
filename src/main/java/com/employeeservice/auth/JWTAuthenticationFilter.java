@@ -26,12 +26,12 @@ import java.util.ArrayList;
 
 public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
     private AuthenticationManager authenticationManager;
     private AccountService userDetailsService;
 
-    public JWTAuthenticationFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager, AccountService userDetailsService) {
+    JWTAuthenticationFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager, AccountService userDetailsService) {
         super(defaultFilterProcessesUrl);
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
@@ -54,7 +54,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
                             new ArrayList<>())
             );
         } catch (IOException e) {
-            LOGGER.error(":attemptAuthentication:error during authorization" + e.getMessage());
+            logger.error(":attemptAuthentication:error during authorization" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
