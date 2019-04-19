@@ -1,6 +1,6 @@
 # EmployeeService
-Spring Based API with employee entities for micro services architecture with rabbitmq, mongo, Auth/Authorization layer
-and event-service which subscribe for message broker.
+Spring Based API with employee entities for micro services architecture with rabbitmq, mongo, Auth/Authorization layer,swagger
+and event-service which subscribe for message broker. 
 
 
 ## Requirements
@@ -73,6 +73,11 @@ Available tasks:
 #### Requests:
 EmployeeService exposed on 8080 port and 
 EventService exposed on 8081 port by default.
+
+
+#### SWAGGER 
+
+    http://localhost:8080/swagger-ui.html
 
 
 
