@@ -1,21 +1,23 @@
 # EmployeeService
 Spring Based API with employee entities for micro services architecture with rabbitmq
-and event-ervice wich subscribe and receive all messages
+and event-service which subscribe for message broker.
 
 
 
 ### Run/Install: 
 
-Initially main idea of project is to provide fast setup for producer-consumer spring based solutions with api's and exchanged entities,
-and ung this solution in different profile modes.
-In current setup all full loaded project will produce 4 docker containers connected in a network.
-Employee Service for producing messages and storing entities in Mongo.
-Event Service for receiving messages from queue and also storing them in Mongo
-Docker with MongoDb.
-Docker with RabbitMq.
+Initially main idea of project is to provide fast setup for producer-consumer spring based solutions with api's exchanged entities,
+and run this solution in different profile modes.
 
-services  itself can run locally without any docker setups.
-it requires get two repositories, EmployeeService with EventService 
+In current setup all full loaded project will produce 4 docker containers connected in a their hub network network.
+
+1. Employee Service for producing messages and storing entities in Mongo.
+2. Event Service for receiving messages from queue and also storing them in Mongo
+3. Docker with MongoDb.
+4. Docker with RabbitMq.
+
+Services  itself can run locally without any docker setups.
+it requires two of  repositories, EmployeeService with EventService 
 and run thru:
 * ./gradle buildLocalContainers - for launching mongo and rabbitmq dockers 
 * ./gradlew clean build run - for EmployeeService and  EventService running jars separately
@@ -24,17 +26,35 @@ while regular profile will connect to mongo:27777 and rabbitmq:15672
 
 
 #### Option 1
+
 * Verify you have mongodb on you local machine if not, you can use docker instead.
-*  ./gradlew buildLocalContainers 
+* ./gradlew buildLocalContainers 
 * Build your EmployeeService with with dev profile   **./gradle clean build run**
 * Build your EventService    with with dev profile   **./gradle clean build run**
 run itself is part of application plugin and using   -Dspring.profiles.active=dev
 
 
 #### Option 2 
+
 *  ./gradlew startDocker 
 
 
+#### Invironment:
+Big part of launching environment are different gradle tasks, for creating building and launching dockers and connect them into network.
+event.sh will clone EventService and produce docker image for this service.
+Available tasks:
+
+**startDocker** - will launch all solution.
+
+**buildLocalContainers** - will build mongo and rabbitmq without internal network
+
+**buildDockers** - will remove and build only mongo, rabbitmq containers and internal network.
+
+**getEmployeeService** - will build employee container and connect to internal microservice network
+
+**getEventService** -  will build event container and connect to internal microservice network
+
+**removedockers** -will remove all solution containers and images built by this repo.
 
 
 #### Requests:
@@ -50,10 +70,11 @@ curl -X POST \
   -H 'cache-control: no-cache' \
   -d '{"name":"department"}'
 
-
+  
 **create employee :**
 
-employee should be created with existing department id
+employee should be created with already existing department id,
+also email property of employee are unique.
 
 curl -X POST \
   http://localhost:8080/employee/ \

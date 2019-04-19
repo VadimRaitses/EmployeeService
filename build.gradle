@@ -80,19 +80,11 @@ task buildLocalContainers <<{
 
 
 task getEmployeeService << {
-   // removeRunningDocker()
-   // createMicroServiceNetwork()
-   // createMongoContainer()
-   // createRabbitMqContainer()
     createEmployeeServiceContainer(version)
     initAndRun()
 }
 
 task getEventService << {
-    //removeRunningDocker()
-    //createMicroServiceNetwork()
-    //createMongoContainer()
-    //createRabbitMqContainer()
     println "${version}"
     createEventServiceContainer()
 }
@@ -101,6 +93,7 @@ task getEventService << {
 
 task buildDockers<<{
     removeRunningDocker()
+    createMicroServiceNetwork()
     createMongoContainer()
     createRabbitMqContainer()
 }
