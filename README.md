@@ -62,10 +62,24 @@ EmployeeService exposed on 8080 port and
 EventService exposed on 8081 port by default.
 
 
+
+This step will produce a user and authenticate him, so response will appear with jwt token and add a user to your curent repository
+
+curl -X POST 
+http://localhost:8080/token/ \
+-H 'authorization: authorization: Bearer aabbccdd_ee' \
+-H 'cache-control: no-cache' \
+-H 'content-type: application/json' \
+-d '{"email":"test","password":"test"}'
+
+In response will appear authorization header with jwt token, which should be copied to other requst headers for authorization "Authorization":"Bearer aabbccdd_ee"
+
+
 **create department :**
 
 curl -X POST \
   http://localhost:8080/department/ \
+  -H 'authorization: authorization: Bearer aabbccdd_ee' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{"name":"department"}'
@@ -80,6 +94,7 @@ also email property of employee are unique.
 
 curl -X POST \
   http://localhost:8080/employee/ \
+  -H 'authorization: authorization: Bearer aabbccdd_ee' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{
@@ -102,6 +117,7 @@ in successful case will respond created entity with id. and status 200
 
 curl -X PUT \
   http://localhost:8080/employee/{id} \
+  -H 'authorization: authorization: Bearer aabbccdd_ee' \
   -H 'Content-Type: application/json' \
   -H 'cache-control: no-cache' \
   -d '{

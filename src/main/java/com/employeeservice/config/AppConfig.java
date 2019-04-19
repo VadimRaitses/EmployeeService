@@ -1,10 +1,7 @@
 package com.employeeservice.config;
 
 import com.employeeservice.dao.MongoDaoRepository;
-import com.employeeservice.services.QueueService;
 import com.employeeservice.services.impl.DepartmentServiceImpl;
-import com.employeeservice.services.impl.EmployeeServiceImpl;
-import com.employeeservice.services.impl.RabbitMqQueueServiceImpl;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import org.springframework.amqp.core.Queue;
@@ -12,10 +9,10 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Raitses Vadim
@@ -78,15 +75,12 @@ public class AppConfig {
         return new DepartmentServiceImpl(mongoRepositoryDao());
     }
 
-//    @Bean
-//    public QueueService getRabbitService() {
-//        return new RabbitMqQueueServiceImpl(rabbitTemplate(), rabbitMqProperties().getTopicExchangeName());
-//    }
 
-//    @Bean
-//    public EmployeeServiceImpl employeeService() {
-//        return new EmployeeServiceImpl(mongoRepositoryDao(), getRabbitService());
-//    }
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 
     @Bean("exchangeTopic")
     public String exchangeTopic(){

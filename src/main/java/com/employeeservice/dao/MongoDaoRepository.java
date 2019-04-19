@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class MongoDaoRepository implements DaoRepository {
+public class MongoDaoRepository implements DaoRepository  {
 
 
     private final MongoTemplate template;
@@ -59,4 +59,5 @@ public class MongoDaoRepository implements DaoRepository {
     public Object exists(String id, Class entityClass) {
         return get(id, entityClass);
     }
+
 }
