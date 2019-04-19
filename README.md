@@ -3,6 +3,10 @@ Spring Based API with employee entities for micro services architecture with rab
 and event-service which subscribe for message broker.
 
 
+##Requirements
+
+* Gradle less than 5 (available in /gradle)
+* Docker
 
 ### Run/Install: 
 
@@ -11,10 +15,10 @@ and run this solution in different profile modes.
 
 In current setup all full loaded project will produce 4 docker containers connected in a their hub network network.
 
-1. Employee Service for producing messages and storing entities in Mongo.
-2. Event Service for receiving messages from queue and also storing them in Mongo
-3. Docker with MongoDb.
-4. Docker with RabbitMq.
+    1. Employee Service for producing messages and storing entities in Mongo.
+    2. Event Service for receiving messages from queue and also storing them in Mongo
+    3. Docker with MongoDb. no required authenticateion for mongo.
+    4. Docker with RabbitMq.
 
 Services  itself can run locally without any docker setups.
 it requires two of  repositories, EmployeeService with EventService 
@@ -25,36 +29,45 @@ but using "run" default profile will be profile: = -Dspring.profiles.active=dev,
 while regular profile will connect to mongo:27777 and rabbitmq:15672
 
 
-#### Option 1
+#### Option 1:
 
-* Verify you have mongodb on you local machine if not, you can use docker instead.
-* ./gradlew buildLocalContainers 
-* Build your EmployeeService with with dev profile   **./gradle clean build run**
-* Build your EventService    with with dev profile   **./gradle clean build run**
-run itself is part of application plugin and using   -Dspring.profiles.active=dev
+   * Verify you have mongodb on you local machine if not, you can use docker instead.
+      
+    ./gradlew buildLocalContainers 
+       
+   * Build your EmployeeService with with dev profile   
+           
+    ./gradle clean build run
+    
+   * Build your EventService    with with dev profile  
+   
+    ./gradle clean build run
+        
+   * run itself is part of application plugin and using   
+        
+    -Dspring.profiles.active=dev
 
 
-#### Option 2 
+#### Option 2:
 
-*  ./gradlew startDocker 
+    ./gradlew startDocker 
 
 
 #### Invironment:
 Big part of launching environment are different gradle tasks, for creating building and launching dockers and connect them into network.
 event.sh will clone EventService and produce docker image for this service.
 Available tasks:
+    **startDocker** - will launch all solution.
 
-**startDocker** - will launch all solution.
+   **buildLocalContainers** - will build mongo and rabbitmq without internal network
 
-**buildLocalContainers** - will build mongo and rabbitmq without internal network
+   **buildDockers** - will remove and build only mongo, rabbitmq containers and internal network.
 
-**buildDockers** - will remove and build only mongo, rabbitmq containers and internal network.
+   **getEmployeeService** - will build employee container and connect to internal microservice network
 
-**getEmployeeService** - will build employee container and connect to internal microservice network
+   **getEventService** -  will build event container and connect to internal microservice network
 
-**getEventService** -  will build event container and connect to internal microservice network
-
-**removedockers** -will remove all solution containers and images built by this repo.
+   **removedockers** -will remove all solution containers and images built by this repo.
 
 
 #### Requests:
@@ -65,24 +78,24 @@ EventService exposed on 8081 port by default.
 
 This step will produce a user and authenticate him, so response will appear with jwt token and add a user to your curent repository
 
-curl -X POST 
-http://localhost:8080/token/ \
--H 'authorization: authorization: Bearer aabbccdd_ee' \
--H 'cache-control: no-cache' \
--H 'content-type: application/json' \
--d '{"email":"test","password":"test"}'
+    curl -X POST 
+    http://localhost:8080/token/ \
+    -H 'authorization: authorization: Bearer aabbccdd_ee' \
+    -H 'cache-control: no-cache' \
+    -H 'content-type: application/json' \
+    -d '{"email":"test","password":"test"}'
 
 In response will appear authorization header with jwt token, which should be copied to other requst headers for authorization "Authorization":"Bearer aabbccdd_ee"
 
 
 **create department :**
 
-curl -X POST \
-  http://localhost:8080/department/ \
-  -H 'authorization: authorization: Bearer aabbccdd_ee' \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{"name":"department"}'
+    curl -X POST \
+    http://localhost:8080/department/ \
+    -H 'authorization: authorization: Bearer aabbccdd_ee' \
+    -H 'Content-Type: application/json' \
+    -H 'cache-control: no-cache' \
+    -d '{"name":"Chicago Bulls"}'
 
 in successful case will respond created entity with id. and status 200
 
@@ -92,20 +105,20 @@ in successful case will respond created entity with id. and status 200
 employee should be created with already existing department id,
 also email property of employee are unique.
 
-curl -X POST \
-  http://localhost:8080/employee/ \
-  -H 'authorization: authorization: Bearer aabbccdd_ee' \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{
-	"email":"vadim.vadim@vadim.vadim",
-	"fullName":"vadim vadim",
-	"birthday":"1985-09-10",
-	"department":{
-	"id" : "54506471-36de-40f7-96cf-7b461f86f859",
-	"name" : "department"
-	}
-}'
+    curl -X POST \
+      http://localhost:8080/employee/ \
+      -H 'authorization: authorization: Bearer aabbccdd_ee' \
+      -H 'Content-Type: application/json' \
+      -H 'cache-control: no-cache' \
+      -d '{
+        "email":"michael.jordan@nba.goat",
+        "fullName":"Michael Jordan",
+        "birthday":"1963-17-02",
+        "department":{
+        "id" : "54506471-36de-40f7-96cf-7b461f86f859",
+        "name" : "Chicago Bulls"
+        }
+    }'
 
 in successful case will respond created entity with id. and status 200
 400 in case of provided bad department id 400
@@ -115,43 +128,44 @@ in successful case will respond created entity with id. and status 200
 
 **update employee :**
 
-curl -X PUT \
-  http://localhost:8080/employee/{id} \
-  -H 'authorization: authorization: Bearer aabbccdd_ee' \
-  -H 'Content-Type: application/json' \
-  -H 'cache-control: no-cache' \
-  -d '{
-	"email":"angelPEtro@gmaild.comdddmm",
-	"fullName":"vadim Angulart",
-	"birthday":"1985-09-10",
-	"department":{
-	"id" : "abd55a3d-371c-433e-8b28-7a0375d174ef",
-	"name" : "department"
-	}
-}'
+    curl -X PUT \
+      http://localhost:8080/employee/{id} \
+      -H 'authorization: authorization: Bearer aabbccdd_ee' \
+      -H 'Content-Type: application/json' \
+      -H 'cache-control: no-cache' \
+      -d '{
+        "email":"angelPEtro@gmaild.comdddmm",
+        "fullName":"vadim Angulart",
+        "birthday":"1985-09-10",
+        "department":{
+        "id" : "abd55a3d-371c-433e-8b28-7a0375d174ef",
+        "name" : "department"
+        }
+    }'
 
 in successful case will respond with status 204  
 
 
 
-**get Employee** 
+**GET Employee** 
 
-curl -X GET \
-  http://localhost:8080/employee/{id} \
-  -H 'cache-control: no-cache' 
+    curl -X GET \
+      http://localhost:8080/employee/{id} \
+      -H 'cache-control: no-cache' 
 
 
-** delete employee **
-curl -X DELETE \
-  http://localhost:8080/employee/{id} \
-  -H 'cache-control: no-cache'
+**DELETE employee**
+
+    curl -X DELETE \
+      http://localhost:8080/employee/{id} \
+      -H 'cache-control: no-cache'
   
 in successful case will respond with status 204  
 
-**get Events** 
+**GET Events** 
 
-curl -X GET \
-  http://localhost:8081/event/{employeeid} \
-  -H 'cache-control: no-cache'
+    curl -X GET \
+      http://localhost:8081/event/{employeeid} \
+      -H 'cache-control: no-cache'
 
-array of 
+array of events
