@@ -84,7 +84,7 @@ EventService exposed on 8081 port by default.
 This step will produce a user and authenticate him, so response will appear with jwt token and add a user to your curent repository
 
     curl -X POST 
-    http://localhost:8080/token/ \
+    http://localhost:8080/auth/ \
     -H 'cache-control: no-cache' \
     -H 'content-type: application/json' \
     -d '{"email":"test","password":"test"}'

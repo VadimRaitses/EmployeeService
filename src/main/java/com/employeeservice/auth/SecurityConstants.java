@@ -11,6 +11,6 @@ class SecurityConstants {
     final static long EXPIRATION_TIME = 864_000_000; // 10 days
     final static String TOKEN_PREFIX = "Bearer ";
     final static String HEADER_STRING = "Authorization";
-    final static String SIGN_UP_URL = "/token/";
+    final static String SIGN_UP_URL = "/auth/";
 
 }
