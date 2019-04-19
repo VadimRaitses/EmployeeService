@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.core.query.Update;
 
 public interface Updatable {
 
-     Update getUpdatedData();
+    Update getUpdatedData();
 }

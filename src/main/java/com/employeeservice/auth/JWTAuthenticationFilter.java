@@ -1,6 +1,5 @@
 package com.employeeservice.auth;
 
-import com.employeeservice.exceptions.GlobalExceptionHandler;
 import com.employeeservice.models.Account;
 import com.employeeservice.services.AccountService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-
 
 
 /**
@@ -65,7 +63,7 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
     protected void successfulAuthentication(HttpServletRequest req,
                                             HttpServletResponse res,
                                             FilterChain chain,
-                                            Authentication auth)  {
+                                            Authentication auth) {
         TokenAuthenticationService.addAuthentication(res, auth);
     }
 }

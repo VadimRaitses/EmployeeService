@@ -16,7 +16,6 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,22 +36,22 @@ public class JWTAuthenticationFilterTest {
     private final String url = "/token/";
     private Account acc;
     private ServletInputStream servletInputStream;
-    ByteArrayInputStream byteArrayInputStream;
-    UsernamePasswordAuthenticationToken uToken;
-    private  final AutType expectedType = new AutType();
+    private ByteArrayInputStream byteArrayInputStream;
+    private UsernamePasswordAuthenticationToken uToken;
+    private final AutType expectedType = new AutType();
 
     @Before
     public void setup() {
 
 
-        acc = new Account("vadik", "va", "va");
+        acc = new Account("va", "va");
         classUnderTest = new JWTAuthenticationFilter(url, authManager, userDetailsService);
 
         String myString = "{\"email\":\"va\",\"password\": \"va\"}";
         byteArrayInputStream = new ByteArrayInputStream(myString.getBytes(StandardCharsets.UTF_8));
         servletInputStream = new ServletInputStream() {
             @Override
-            public int read() throws IOException {
+            public int read() {
                 return byteArrayInputStream.read();
             }
 
@@ -86,14 +85,14 @@ public class JWTAuthenticationFilterTest {
         when(authManager.authenticate(isA(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(expectedType);
         Authentication actual = classUnderTest.attemptAuthentication(req, res);
-        Assert.assertEquals(expectedType,actual);
+        Assert.assertEquals(expectedType, actual);
     }
 
     @Test
     public void successfulAuthentication() {
     }
 
-    class AutType implements Authentication{
+    class AutType implements Authentication {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -10,5 +10,4 @@ public interface AccountService extends UserDetailsService {
     void addAccount(Account account);
 
 
-
 }

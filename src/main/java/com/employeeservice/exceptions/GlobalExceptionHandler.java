@@ -24,13 +24,11 @@ public class GlobalExceptionHandler {
     }
 
 
-
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<?> entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
         ErrorDetails errorDetails = getErrorDetails(request, ex.getLocalizedMessage());
         return new ResponseEntity<>(errorDetails, HttpStatus.NOT_FOUND);
     }
-
 
 
     @ExceptionHandler(EntityAlreadyExistsException.class)

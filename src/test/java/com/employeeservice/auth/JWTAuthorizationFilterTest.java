@@ -29,7 +29,7 @@ public class JWTAuthorizationFilterTest {
 
     @Before
     public void setup() {
-        acc = new Account("vadik", "va", "abc.com");
+        acc = new Account("va", "abc.com");
         classUnderTest = new JWTAuthorizationFilterMock(authManager);
     }
 
@@ -51,14 +51,12 @@ public class JWTAuthorizationFilterTest {
 
 
     @Test
-    public void authorizeNotSucceded() throws Exception{
+    public void authorizeNotSucceded() throws Exception {
         when(req.getHeader(HEADER_STRING)).thenReturn("not token");
-        doThrow(RuntimeException.class).when(chain).doFilter(isA(HttpServletRequest.class),isA(HttpServletResponse.class));
+        doThrow(RuntimeException.class).when(chain).doFilter(isA(HttpServletRequest.class), isA(HttpServletResponse.class));
         boolean actual = classUnderTest.authorize(req, res, chain);
         Assert.assertFalse(actual);
     }
-
-
 
 
     class JWTAuthorizationFilterMock extends JWTAuthorizationFilter {

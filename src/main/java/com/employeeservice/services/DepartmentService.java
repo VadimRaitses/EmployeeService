@@ -5,7 +5,7 @@ import com.employeeservice.models.Department;
 
 
 /**
- *  @author  Raitses Vadim
+ * @author Raitses Vadim
  */
 
 

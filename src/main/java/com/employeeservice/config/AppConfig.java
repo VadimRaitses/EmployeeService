@@ -23,14 +23,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppConfig {
 
 
-
     @Bean
-    MongoProperties mongoProperties(){
+    MongoProperties mongoProperties() {
         return new MongoProperties();
     }
 
     @Bean
-    RabbitMqProperties rabbitMqProperties(){
+    RabbitMqProperties rabbitMqProperties() {
         return new RabbitMqProperties();
     }
 
@@ -41,7 +40,7 @@ public class AppConfig {
 
     @Bean
     public MongoTemplate mongoTemplate() {
-        return new MongoTemplate(mongo(),mongoProperties().getDatabase());
+        return new MongoTemplate(mongo(), mongoProperties().getDatabase());
     }
 
     @Bean
@@ -83,7 +82,7 @@ public class AppConfig {
 
 
     @Bean("exchangeTopic")
-    public String exchangeTopic(){
+    public String exchangeTopic() {
         return rabbitMqProperties().getTopicExchangeName();
     }
 

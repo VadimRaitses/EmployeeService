@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 /**
- *  @author  Raitses Vadim
+ * @author Raitses Vadim
  */
 
 @Document(collection = "department")

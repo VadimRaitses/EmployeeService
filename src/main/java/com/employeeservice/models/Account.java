@@ -6,14 +6,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "users")
 public class Account {
 
-    private String name;
     private String password;
-    @Indexed(name="email",unique = true)
+    @Indexed(name = "email", unique = true)
     private String email;
 
 
-    public Account(String name, String password, String email) {
-        this.name = name;
+    public Account(String password, String email) {
         this.password = password;
         this.email = email;
     }
@@ -22,15 +20,6 @@ public class Account {
     public Account() {
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public Account setName(String name) {
-        this.name = name;
-        return this;
-    }
 
     public String getPassword() {
         return password;

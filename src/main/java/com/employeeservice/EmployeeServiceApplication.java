@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 /**
- *  @author  Raitses Vadim
+ * @author Raitses Vadim
  */
 
 @SpringBootApplication

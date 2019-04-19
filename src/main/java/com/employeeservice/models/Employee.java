@@ -6,19 +6,20 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Update;
+
 import java.util.Date;
 
 
 /**
- *  @author  Raitses Vadim
+ * @author Raitses Vadim
  */
 
 @Document(collection = "employee")
-public class Employee implements Updatable{
+public class Employee implements Updatable {
 
     @Id
     private String id;
-    @Indexed(name="email",unique = true)
+    @Indexed(name = "email", unique = true)
     private String email;
     private String fullName;
     private Date birthday;

@@ -80,7 +80,6 @@ This step will produce a user and authenticate him, so response will appear with
 
     curl -X POST 
     http://localhost:8080/token/ \
-    -H 'authorization: authorization: Bearer aabbccdd_ee' \
     -H 'cache-control: no-cache' \
     -H 'content-type: application/json' \
     -d '{"email":"test","password":"test"}'

@@ -18,7 +18,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import static com.employeeservice.auth.SecurityConstants.SIGN_UP_URL;
 
 
-
 /**
  * @author Raitses Vadim
  */

@@ -93,18 +93,16 @@ public class EmployeeServiceImplTest {
     @Test
     public void updateEmployeeSuccess() throws Exception {
         Employee expected = new Employee().setId(employeeMockedId).setDepartment(new Department().setId("id"));
-        when(repository.update("id",expected, Employee.class)).thenReturn(true);
-        boolean actual = classUnderTest.updateEmployee("id",expected);
+        when(repository.update("id", expected, Employee.class)).thenReturn(true);
+        boolean actual = classUnderTest.updateEmployee("id", expected);
         Assert.assertTrue(actual);
     }
 
 
-
-    @Test(expected= EntityNotFoundException.class)
+    @Test(expected = EntityNotFoundException.class)
     public void updateEmployeeEntityNotFoundException() throws Exception {
         Employee expected = new Employee().setId(employeeMockedId).setDepartment(new Department().setId("id"));
-        //when(repository.update("id",expected, Employee.class)).thenReturn(true);
-        classUnderTest.updateEmployee("id",expected);
+        classUnderTest.updateEmployee("id", expected);
 
     }
 
@@ -117,7 +115,7 @@ public class EmployeeServiceImplTest {
     }
 
 
-    @Test(expected= EntityNotFoundException.class)
+    @Test(expected = EntityNotFoundException.class)
     public void deleteEmployeeEntityNotFoundException() throws Exception {
         classUnderTest.deleteEmployee("id");
 
