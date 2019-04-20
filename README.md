@@ -50,18 +50,21 @@ while regular profile will connect to mongo:27777 and rabbitmq:15672
 
 #### Option 2:
 
-    ./gradlew startDocker 
-
+     This option have consequtive chain because of integration part.
+    ./gradlew buildDockers clean build buildServices
+    
 
 #### Invironment:
 Big part of launching environment are different gradle tasks, for creating building and launching dockers and connect them into network.
 event.sh will clone EventService and produce docker image for this service.
 Available tasks:
-    **startDocker** - will launch all solution.
-
+    **startDocker** - will launch all solution. but will fail on integration test part.
+    
    **buildLocalContainers** - will build mongo and rabbitmq without internal network
 
    **buildDockers** - will remove and build only mongo, rabbitmq containers and internal network.
+   
+   **buildServices** - build and run container of rest services (Event, Entity)
 
    **getEmployeeService** - will build employee container and connect to internal microservice network
 

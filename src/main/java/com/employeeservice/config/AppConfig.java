@@ -11,6 +11,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -33,21 +34,25 @@ public class AppConfig {
         return new RabbitMqProperties();
     }
 
+    @Lazy
     @Bean
     public MongoClient mongo() {
         return new MongoClient(mongoProperties().getHost(), mongoProperties().getPort());
     }
 
+    @Lazy
     @Bean
     public MongoTemplate mongoTemplate() {
         return new MongoTemplate(mongo(), mongoProperties().getDatabase());
     }
 
+    @Lazy
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory(rabbitMqProperties().getHost());
     }
 
+    @Lazy
     @Bean
     public RabbitTemplate rabbitTemplate() {
         return new RabbitTemplate(connectionFactory());

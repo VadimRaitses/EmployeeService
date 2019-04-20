@@ -21,25 +21,25 @@ configurations {
     }
 }
 
-application {
-    mainClassName = 'com.employeeservice.EmployeeServiceApplication'
-    applicationDefaultJvmArgs = ['-Dspring.profiles.active=dev']
-}
+mainClassName = 'com.employeeservice.EmployeeServiceApplication'
+applicationDefaultJvmArgs = ['-Dspring.profiles.active=dev']
+
+
 
 
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-amqp'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-    compile 'org.springframework.boot:spring-boot-starter-security'
-    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
-    compile group: 'io.springfox',name: 'springfox-swagger2',version: '2.9.2'
-    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
+    implementation group: 'io.springfox',name: 'springfox-swagger2',version: '2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 }
 
 task wrapper(type: Wrapper) {
@@ -90,7 +90,7 @@ task getEmployeeService << {
 
 task getEventService << {
     println "${version}"
-    createEventServiceContainer()
+    createEventServiceContainer(version)
 }
 
 
@@ -102,7 +102,13 @@ task buildDockers<<{
     createRabbitMqContainer()
 }
 
-static void createEventServiceContainer(){
+task buildServices<<{
+    createEmployeeServiceContainer(version)
+    createEventServiceContainer(version)
+    initAndRun()
+}
+
+static void createEventServiceContainer(version){
     def commands = [
             "ls",
             "sh ./event.sh",
