@@ -1,5 +1,5 @@
 # EmployeeService
-Spring Based API with abstract employee entities for **Dockerized** micro services architecture with **RabbitMQ**, **MongoDb**, Auth/Authorization layer, **Swagger**
+[Spring Boot](https://spring.io/projects/spring-boot) Based API with abstract employee entities for **Dockerized** micro services architecture with **RabbitMQ**, **MongoDb**, Auth/Authorization layer, **Swagger**
 and [EventService](https://github.com/VadimRaitses/EventService.git) which subscribe for message broker. 
 
 
