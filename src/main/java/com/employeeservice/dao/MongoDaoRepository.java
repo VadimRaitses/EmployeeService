@@ -10,6 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
+/**
+ * @author Raitses Vadim
+ */
+
 @Repository
 public class MongoDaoRepository implements DaoRepository {
 

@@ -3,6 +3,10 @@ package com.employeeservice.models;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author Raitses Vadim
+ */
+
 @Document(collection = "database_sequences")
 public class DatabaseSequence {
     @Id

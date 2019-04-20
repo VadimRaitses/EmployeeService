@@ -13,6 +13,11 @@ import static org.springframework.data.mongodb.core.FindAndModifyOptions.options
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+/**
+ * @author Raitses Vadim
+ */
+
+
 @Service
 public class SequenceGeneratorServiceImpl implements SequenceGeneratorService {
 

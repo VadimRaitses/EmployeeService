@@ -1,9 +1,9 @@
 package com.employeeservice.auth;
 
+
 /**
  * @author Raitses Vadim
  */
-
 
 class SecurityConstants {
 

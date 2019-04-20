@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import static java.util.Collections.emptyList;
 
+/**
+ * @author Raitses Vadim
+ */
+
 
 @Service
 public class AccountServiceImpl implements AccountService {

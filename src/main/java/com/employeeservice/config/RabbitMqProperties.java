@@ -4,6 +4,10 @@ package com.employeeservice.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Raitses Vadim
+ */
+
 @Component
 @ConfigurationProperties("rabbitmq")
 public class RabbitMqProperties {

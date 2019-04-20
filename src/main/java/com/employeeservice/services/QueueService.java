@@ -1,6 +1,10 @@
 package com.employeeservice.services;
 
- public interface QueueService<E> {
+/**
+ * @author Raitses Vadim
+ */
+
+public interface QueueService<E> {
 
     void sendMessage(String eventName, E message);
 

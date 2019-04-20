@@ -2,6 +2,10 @@ package com.employeeservice.models;
 
 import java.util.Date;
 
+/**
+ * @author Raitses Vadim
+ */
+
 public class ErrorDetails {
     private final Date timestamp;
     private final String message;

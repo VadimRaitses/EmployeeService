@@ -3,6 +3,11 @@ package com.employeeservice.models;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @author Raitses Vadim
+ */
+
+
 @Document(collection = "users")
 public class Account {
 
