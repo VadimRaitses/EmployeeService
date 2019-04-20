@@ -1,14 +1,19 @@
 # EmployeeService
-Spring Based API with employee entities for micro services architecture with rabbitmq, mongo, Auth/Authorization layer,swagger
-and event-service which subscribe for message broker. 
+Spring Based API with abstract employee entities for **Dockerized** micro services architecture with **RabbitMQ**, **MongoDb**, Auth/Authorization layer, **Swagger**
+and [EventService](https://github.com/VadimRaitses/EventService.git) which subscribe for message broker. 
 
 
 ## Requirements
 
-* Gradle less than 5 (available in /gradle)
-* Docker
 
-### Run/Install: 
+* [Gradle less than 5 (available in /gradle)](https://gradle.org/)
+* [Java 8](https://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
+* [Docker knowledge](https://www.docker.com/)
+* [RabbitMq knowledge](https://www.rabbitmq.com/)
+* [MongoDb knowledge](https://www.mongodb.com/)
+
+## Run/Install: 
+
 
 Initially main idea of project is to provide fast setup for producer-consumer spring based solutions with api's exchanged entities,
 and run this solution in different profile modes.
@@ -21,15 +26,16 @@ In current setup all full loaded project will produce 4 docker containers connec
     4. Docker with RabbitMq.
 
 Services  itself can run locally without any docker setups.
-it requires two of  repositories, EmployeeService with EventService 
+it requires two of  repositories, EmployeeService with [EventService](https://github.com/VadimRaitses/EventService.git)
 and run thru:
 * ./gradle buildLocalContainers - for launching mongo and rabbitmq dockers 
-* ./gradlew clean build run - for EmployeeService and  EventService running jars separately
+* ./gradlew clean build run - for EmployeeService and  [EventService](https://github.com/VadimRaitses/EventService.git) running jars separately
 but using "run" default profile will be profile: = -Dspring.profiles.active=dev, when mongo and rabbitmq will be a part of local network.
 while regular profile will connect to mongo:27777 and rabbitmq:15672
 
 
 #### Option 1:
+
 
    * Verify you have mongodb on you local machine if not, you can use docker instead.
       
@@ -39,7 +45,7 @@ while regular profile will connect to mongo:27777 and rabbitmq:15672
            
     ./gradle clean build run
     
-   * Build your EventService    with with dev profile  
+   * Build your [EventService](https://github.com/VadimRaitses/EventService.git)   with with dev profile  
    
     ./gradle clean build run
         
@@ -54,9 +60,11 @@ while regular profile will connect to mongo:27777 and rabbitmq:15672
     ./gradlew buildDockers clean build buildServices
     
 
-#### Invironment:
+## Environment:
+
+
 Big part of launching environment are different gradle tasks, for creating building and launching dockers and connect them into network.
-event.sh will clone EventService and produce docker image for this service.
+event.sh will clone [EventService](https://github.com/VadimRaitses/EventService.git)  and produce docker image for this service.
 Available tasks:
     **startDocker** - will launch all solution. but will fail on integration test part.
     
@@ -73,16 +81,19 @@ Available tasks:
    **removedockers** -will remove all solution containers and images built by this repo.
 
 
-#### Requests:
-EmployeeService exposed on 8080 port and 
-EventService exposed on 8081 port by default.
 
 
-#### SWAGGER 
+## SWAGGER
 
     http://localhost:8080/swagger-ui.html
+    
+
+### Requests:
 
 
+EmployeeService exposed on 8080 port and 
+
+[EventService](https://github.com/VadimRaitses/EventService.git) exposed on 8081 port by default.
 
 This step will produce a user and authenticate him, so response will appear with jwt token and add a user to your curent repository
 
@@ -128,8 +139,11 @@ also email property of employee are unique.
     }'
 
 in successful case will respond created entity with id. and status 200
-400 in case of provided bad department id 400
+
+400 in case of provided bad department id
+
 404 in case of department not found 
+
 400 in case of  exisiting employee with same email,
 
 
